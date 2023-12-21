@@ -16,7 +16,7 @@ public class PlaneController {
     @Autowired
     private PlaneService planeService;
     @PostMapping("/add")
-    public ResponseModel<Plane> addBuss(@RequestBody Plane plane){
+    public ResponseModel<Plane> addPlane(@RequestBody Plane plane){
         final Plane savedPlane = planeService.addPlane(plane);
         return new ResponseModel<>(HttpStatus.OK.value(),"Plane saved", savedPlane);
     }

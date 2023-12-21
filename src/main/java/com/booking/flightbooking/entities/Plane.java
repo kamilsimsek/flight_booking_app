@@ -14,11 +14,11 @@ import lombok.Setter;
 public class Plane {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long hotelId;
+    private Long planeId;
     private String planeName;
     private String planeType;
     private Integer totalSeat;
     @Column(unique = true)
-    private String busNumber;
+    private String planeNumber;
 
 }
