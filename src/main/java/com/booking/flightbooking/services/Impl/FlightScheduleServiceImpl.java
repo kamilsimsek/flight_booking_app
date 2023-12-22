@@ -21,8 +21,7 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
 
     @Override
     public FlightSchedule addSchedule(FlightSchedule flightSchedule) throws ReservationApiException{
-        final boolean exists = flightScheduleRepository.existsByPlaneAndFlightRouteAndDepartureTime(
-                flightSchedule.getPlane(),
+        final boolean exists = flightScheduleRepository.existsByFlightRouteAndDepartureTime(
                 flightSchedule.getFlightRoute(),
                 flightSchedule.getDepartureTime()
         );

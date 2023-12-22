@@ -10,9 +10,17 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "flight_reservation")
 public class Reservation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
-    private Customer customer;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @OneToOne
+    @JoinColumn(name = "flight_schedule_id")
     private FlightSchedule flightSchedule;
     private Long timestamp;
     private String departureDate;

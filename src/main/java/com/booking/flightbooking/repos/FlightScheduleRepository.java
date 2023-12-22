@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface FlightScheduleRepository extends JpaRepository<FlightSchedule, Long> {
     Optional<List<FlightSchedule>> findByFlightRoute(FlightRoute flightRoute);
-    Boolean existsByPlaneAndFlightRouteAndDepartureTime(Plane plane, FlightRoute flightRoute, String date);
+    Boolean existsByFlightRouteAndDepartureTime(FlightRoute flightRoute, String date);
 }
