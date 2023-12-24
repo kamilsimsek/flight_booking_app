@@ -34,4 +34,8 @@ public class FlightRouteServiceImpl implements FlightRouteService {
     public FlightRoute getRouteByCityFromAndCityTo(String cityFrom, String cityTo) {
         return flightRouteRepository.findByCityFromAndCityTo(cityFrom,cityTo).orElseThrow(() -> new ReservationApiException(HttpStatus.BAD_REQUEST, "No such route found."));
     }
+    @Override
+    public FlightRoute getRouteById(Long id) {
+        return flightRouteRepository.findById(id).orElseThrow(() -> new ReservationApiException(HttpStatus.BAD_REQUEST, "No such route found!"));
+    }
 }

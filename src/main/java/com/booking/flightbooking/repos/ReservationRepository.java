@@ -1,5 +1,6 @@
 package com.booking.flightbooking.repos;
 
+import com.booking.flightbooking.entities.Customer;
 import com.booking.flightbooking.entities.FlightSchedule;
 import com.booking.flightbooking.entities.Reservation;
 import com.booking.flightbooking.entities.User;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    Optional<List<Reservation>> findByUser(User user);
+    Optional<List<Reservation>> findByCustomer(Customer customer);
     Optional<List<Reservation>> findByFlightScheduleAndDepartureDate(FlightSchedule flightSchedule, String departureDate);
 
 }

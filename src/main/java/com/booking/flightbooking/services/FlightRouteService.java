@@ -10,5 +10,6 @@ public interface FlightRouteService {
 
     FlightRoute getRouteByRouteName(String routeName);
     FlightRoute getRouteByCityFromAndCityTo(String cityFrom, String cityTo);
+    public FlightRoute getRouteById(Long id);
 
 }

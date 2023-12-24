@@ -7,4 +7,5 @@ import java.util.List;
 public interface PlaneService {
     Plane addPlane(Plane plane);
     List<Plane> getAllPlane();
+    public void deletePlane(Long id);
 }
