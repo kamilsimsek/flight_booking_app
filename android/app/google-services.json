@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "43193831049",
+    "project_id": "ucak-mobil",
+    "storage_bucket": "ucak-mobil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43193831049:android:13263940b61ea73648c058",
+        "android_client_info": {
+          "package_name": "com.example.flight"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdB1fhk1FstbGGrOMBWHzp_h8BxfrAp68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43193831049:android:db9e521d246be5e148c058",
+        "android_client_info": {
+          "package_name": "com.example.ucak"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdB1fhk1FstbGGrOMBWHzp_h8BxfrAp68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
