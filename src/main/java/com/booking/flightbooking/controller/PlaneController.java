@@ -25,5 +25,4 @@ public class PlaneController {
     public ResponseEntity<List<Plane>> getAllPlane(){
         return ResponseEntity.ok(planeService.getAllPlane());
     }
-
 }

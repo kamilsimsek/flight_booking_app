@@ -3,7 +3,6 @@ package com.booking.flightbooking.services.Impl;
 import com.booking.flightbooking.entities.Customer;
 import com.booking.flightbooking.entities.FlightSchedule;
 import com.booking.flightbooking.entities.Reservation;
-import com.booking.flightbooking.entities.User;
 import com.booking.flightbooking.models.ReservationApiException;
 import com.booking.flightbooking.repos.FlightScheduleRepository;
 import com.booking.flightbooking.repos.ReservationRepository;
