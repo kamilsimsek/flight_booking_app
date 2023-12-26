@@ -1,20 +1,25 @@
+import 'dart:io';
+
 import 'package:ucak/models/flight_reservation.dart';
 import 'package:ucak/models/flight_route_modal.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
 import 'package:ucak/models/plane_modal.dart';
-import 'package:ucak/models/user.dart';
+import 'package:ucak/models/response_model%20copy.dart';
 
 abstract class DataSource {
-  Future<List<User>> getAllUser();
-  Future addUser(User user);
-  Future<FlightRoute?> getFlightRoute(String cityFrom, String cityTo);
+  Future<ResponseModel> addPlane(Plane plane);
+  Future<List<Plane>> getAllPlane();
+  Future<ResponseModel> addRoute(FlightRoute flightRoute);
+  Future<List<FlightRoute>> getAllRoutes();
+  Future<FlightRoute?> getRouteByRouteName(String routeName);
+  Future<FlightRoute?> getRouteByCityFromAndCityTo(
+      String cityFrom, String cityTo);
+  Future<ResponseModel> addSchedule(FlightSchedule flightSchedule);
+  Future<List<FlightSchedule>> getAllSchedules();
   Future<List<FlightSchedule>> getSchedulesByRouteName(String routeName);
+  Future<ResponseModel> addReservation(FlightReservation reservation);
+  Future<List<FlightReservation>> getAllReservation();
+  Future<List<FlightReservation>> getReservationsByMobile(String mobile);
   Future<List<FlightReservation>> getReservationsByScheduleAndDepartureDate(
       int scheduleId, String departureDate);
-  Future addReservation(FlightReservation reservation);
-  Future addPlane(Plane plane);
-  Future addRoute(FlightRoute flightRoute);
-  Future<List<Plane>> getAllPlane();
-  Future<List<FlightRoute>> getAllRoutes();
-  Future addSchedule(FlightSchedule flightSchedule);
 }

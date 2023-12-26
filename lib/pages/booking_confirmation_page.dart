@@ -1,14 +1,7 @@
-import 'dart:math';
-
-import 'package:ucak/datasource/temp_db.dart';
-import 'package:ucak/models/flight_reservation.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
-import 'package:ucak/models/user.dart';
-import 'package:ucak/providers/app_data_provider.dart';
 import 'package:ucak/utils/constants.dart';
 import 'package:ucak/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class BookingConfirmationPage extends StatefulWidget {
   const BookingConfirmationPage({Key? key}) : super(key: key);
@@ -31,9 +24,9 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
 
   @override
   void initState() {
-    nameController.text = 'Mr. ABC';
-    mobileController.text = '01711000001';
-    emailController.text = 'abc@gmail.com';
+    nameController.text = '';
+    mobileController.text = '';
+    emailController.text = '';
     super.initState();
   }
 
@@ -217,34 +210,6 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
   }
 
   void _confirmBooking() {
-    if (_formKey.currentState!.validate()) {
-      final user = User(
-          id: 1,
-          name: nameController.text,
-          mail: mobileController.text,
-          password: "",
-          role: "");
-
-      final reservation = FlightReservation(
-        reservationId: TempDB.flightReservationList.length + 1,
-        user: user,
-        flightSchedule: schedule,
-        timestamp: DateTime.now().millisecondsSinceEpoch,
-        departureDate: departureDate,
-        totalSeatBooked: totalSeatsBooked,
-        seatNumbers: seatNumbers,
-        reservationStatus: "active",
-        totalPrice: getGrandTotal(schedule.discount, totalSeatsBooked,
-            schedule.ticketPrice, schedule.processingFee),
-      );
-      Provider.of<AppDataProvider>(context, listen: false)
-          .addReservation(reservation)
-          .then((response) {
-        showMsg(context, "ayıt aşarılı");
-        Navigator.popUntil(context, ModalRoute.withName("search"));
-      }).catchError((error) {
-        showMsg(context, 'Could not save');
-      });
-    }
+    if (_formKey.currentState!.validate()) {}
   }
 }

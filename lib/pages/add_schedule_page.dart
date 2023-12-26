@@ -228,6 +228,6 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
 
   void _getData() {
     Provider.of<AppDataProvider>(context, listen: false).getAllPlane();
-    Provider.of<AppDataProvider>(context, listen: false).getAllFlightRoutes();
+    Provider.of<AppDataProvider>(context, listen: false).getAllPlaneRoutes();
   }
 }

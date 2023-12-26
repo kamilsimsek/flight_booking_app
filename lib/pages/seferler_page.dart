@@ -115,7 +115,7 @@ class ScheduleItemView extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 10),
                     child: Text(
-                      'Total Seat: ${schedule.plane.totalSeat}',
+                      'Toplam Koltuk: ${schedule.plane.totalSeat}',
                       style: const TextStyle(
                         fontSize: 18,
                       ),

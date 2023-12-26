@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ucak/services/auth_service.dart';
 import 'package:ucak/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:ucak/utils/helper_functions.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -24,6 +27,7 @@ class _loginPageState extends State<loginPage> {
         width: deviceWidth,
         height: deviceHeight,
         child: Form(
+          key: _formKey,
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -101,7 +105,7 @@ class _loginPageState extends State<loginPage> {
                         backgroundColor: Colors.blue,
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, "search");
+                        _confirmGirisYap();
                       },
                       child: Text(
                         "GİRİŞ YAP",
@@ -113,26 +117,6 @@ class _loginPageState extends State<loginPage> {
                     ),
                   ),
                 ),
-
-                /*Consumer<AppDataProvider>(
-                    builder: (context, provider, child) =>
-                        DropdownButtonFormField<User>(
-                      onChanged: (value) {
-                        setState(() {
-                          user = value;
-                        });
-                      },
-                      isExpanded: true,
-                      value: user,
-                      hint: const Text('Select Bus'),
-                      items: provider.userList
-                          .map((e) => DropdownMenuItem<User>(
-                                value: e,
-                                child: Text('${e.name}'),
-                              ))
-                          .toList(),
-                    ),
-                  ),*/
                 SizedBox(
                   height: 10,
                 ),
@@ -158,5 +142,34 @@ class _loginPageState extends State<loginPage> {
     );
   }
 
-  void _userKontrol() {}
+  void _confirmGirisYap() {
+    if (_formKey.currentState!.validate()) {
+      _sifreKontrol()
+          ? {
+              signIn(),
+              Navigator.pushNamed(context, "search"),
+              resetFields(),
+            }
+          : "Giriş başarısız";
+    }
+  }
+
+  bool _sifreKontrol() {
+    if (sifreController.text == sifreController.text) {
+      return true;
+    } else {
+      showMsg(context, "Sifreler eslesmiyor");
+      return false;
+    }
+  }
+
+  void resetFields() {
+    mailController.clear();
+    sifreController.clear();
+  }
+
+  Future<void> signIn() async {
+    await AuthService()
+        .signIn(email: mailController.text, password: sifreController.text);
+  }
 }

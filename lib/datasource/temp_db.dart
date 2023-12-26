@@ -2,25 +2,8 @@ import 'package:ucak/models/flight_reservation.dart';
 import 'package:ucak/models/flight_route_modal.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
 import 'package:ucak/models/plane_modal.dart';
-import 'package:ucak/models/user.dart';
-
 
 class TempDB {
-  static List<User> userList = [
-    User(
-        id: 1,
-        name: "Nart",
-        mail: "nartGottenSıken@gmail.com",
-        password: "1234",
-        role: "user"),
-    User(
-        id: 2,
-        name: "caglar",
-        mail: "caglarGottenSıken@gmail.com",
-        password: "1234",
-        role: "admin"),
-  ];
-
   static List<FlightRoute> routeList = [
     FlightRoute(
         routeId: 1,

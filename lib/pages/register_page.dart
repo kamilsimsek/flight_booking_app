@@ -1,6 +1,6 @@
-import 'package:ucak/datasource/temp_db.dart';
-import 'package:ucak/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ucak/providers/app_data_provider.dart';
+import 'package:ucak/services/auth_service.dart';
 import 'package:ucak/utils/constants.dart';
 import 'package:ucak/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -14,17 +14,12 @@ class registerPage extends StatefulWidget {
 }
 
 class _registerPageState extends State<registerPage> {
-  User? user;
+  //User? user;
   final adController = TextEditingController();
   final mailController = TextEditingController();
   final sifreController = TextEditingController();
   final sifreController2 = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  @override
-  void didChangeDependencies() {
-    _getData();
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +162,7 @@ class _registerPageState extends State<registerPage> {
                         backgroundColor: Colors.blue,
                       ),
                       onPressed: () {
-                        _sifreKontrol() ? _confirmGirisYap() : null;
+                        _confirmGirisYap();
                       },
                       child: Text(
                         "ÜYE OL",
@@ -179,26 +174,6 @@ class _registerPageState extends State<registerPage> {
                     ),
                   ),
                 ),
-
-                /*Consumer<AppDataProvider>(
-                  builder: (context, provider, child) =>
-                      DropdownButtonFormField<User>(
-                    onChanged: (value) {
-                      setState(() {
-                        user = value;
-                      });
-                    },
-                    isExpanded: true,
-                    value: user,
-                    hint: const Text('Select Bus'),
-                    items: provider.userList
-                        .map((e) => DropdownMenuItem<User>(
-                              value: e,
-                              child: Text('${e.name}'),
-                            ))
-                        .toList(),
-                  ),
-                ),*/
                 SizedBox(
                   height: 15,
                 ),
@@ -224,27 +199,24 @@ class _registerPageState extends State<registerPage> {
     );
   }
 
+  void _confirmGirisYap() {
+    if (_formKey.currentState!.validate()) {
+      _sifreKontrol()
+          ? {
+              signUp(),
+              Navigator.pushNamed(context, "login"),
+              resetFields(),
+            }
+          : "Giriş başarısız";
+    }
+  }
+
   bool _sifreKontrol() {
     if (sifreController.text == sifreController2.text) {
       return true;
     } else {
       showMsg(context, "Sifreler eslesmiyor");
       return false;
-    }
-  }
-
-  void _confirmGirisYap() {
-    if (_formKey.currentState!.validate()) {
-      final user = User(
-          id: TempDB.userList.length + 1,
-          name: adController.text,
-          mail: mailController.text,
-          password: sifreController.text,
-          role: "user");
-      Provider.of<AppDataProvider>(context, listen: false).addUser(user);
-      resetFields();
-
-      Navigator.pushNamed(context, "login");
     }
   }
 
@@ -255,7 +227,10 @@ class _registerPageState extends State<registerPage> {
     sifreController2.clear();
   }
 
-  void _getData() {
-    Provider.of<AppDataProvider>(context, listen: false).getAllUser();
+  Future<void> signUp() async {
+    await AuthService().signUp(
+        displayName: adController.text,
+        email: mailController.text,
+        password: sifreController.text);
   }
 }

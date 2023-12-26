@@ -1,3 +1,6 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+@unfreezed
 class Plane {
   int? planeId;
   String planeName;

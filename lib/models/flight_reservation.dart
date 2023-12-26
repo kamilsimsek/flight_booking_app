@@ -1,10 +1,10 @@
+import 'package:ucak/models/customer.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
-import 'package:ucak/models/user.dart';
 
 class FlightReservation {
   int? reservationId;
-  User user; //
   FlightSchedule flightSchedule;
+  Customer customer;
   int timestamp; //
   String departureDate;
   int totalSeatBooked;
@@ -14,8 +14,8 @@ class FlightReservation {
 
   FlightReservation({
     this.reservationId,
-    required this.user,
     required this.flightSchedule,
+    required this.customer,
     required this.timestamp,
     required this.departureDate,
     required this.totalSeatBooked,

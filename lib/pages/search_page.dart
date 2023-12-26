@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ucak/drawers/main_drawer.dart';
 import 'package:ucak/providers/app_data_provider.dart';
+import 'package:ucak/services/auth_service.dart';
 import 'package:ucak/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../utils/constants.dart';
 
@@ -18,13 +21,22 @@ class _SearchPageState extends State<SearchPage> {
   DateTime? departureDate;
   final _formKey = GlobalKey<FormState>();
 
-  /*@override
+  late User? _user;
+
+  @override
   void initState() {
-    fromCity = 'Izmir';
-    toCity = 'Istanbul';
-    departureDate = DateTime.now();
     super.initState();
-  }*/
+    _getUserInfo();
+  }
+
+  Future<void> _getUserInfo() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _user = user;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +108,7 @@ class _SearchPageState extends State<SearchPage> {
                   toCity = value;
                 },
               ),
+              Text("data " + _user!.email!),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -162,7 +175,7 @@ class _SearchPageState extends State<SearchPage> {
     }
     if (_formKey.currentState!.validate()) {
       Provider.of<AppDataProvider>(context, listen: false)
-          .getFlightRoute(fromCity!, toCity!)
+          .getRouteByCityFromAndCityTo(fromCity!, toCity!)
           .then((route) {
         Navigator.pushNamed(context, "seferler",
             arguments: [route, getFormattedDate(departureDate!)]);

@@ -5,7 +5,6 @@ import 'package:ucak/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class SeatPlanPage extends StatefulWidget {
   const SeatPlanPage({Key? key}) : super(key: key);
 
@@ -129,10 +128,13 @@ class _SeatPlanPageState extends State<SeatPlanPage> {
                   ),
                 ),
               ),
-            OutlinedButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+              ),
               onPressed: () {
                 if (selectedSeats.isEmpty) {
-                  showMsg(context, 'Please select your seat first');
+                  showMsg(context, 'Lütfen önce koltuk seçiniz');
                   return;
                 }
                 Navigator.pushNamed(context, "bookingConfirmation", arguments: [
@@ -142,7 +144,10 @@ class _SeatPlanPageState extends State<SeatPlanPage> {
                   selectedSeats.length
                 ]);
               },
-              child: const Text('NEXT'),
+              child: const Text(
+                'Rezervasyon Bilgileri',
+                style: TextStyle(color: Colors.white),
+              ),
             )
           ],
         ),
