@@ -1,18 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+part 'plane_modal.freezed.dart';
+part 'plane_modal.g.dart';
 
 @unfreezed
-class Plane {
-  int? planeId;
-  String planeName;
-  String planeNumber;
-  String planeType;
-  int totalSeat;
-
-  Plane({
-    this.planeId,
-    required this.planeName,
-    required this.planeNumber,
-    required this.planeType,
-    required this.totalSeat,
-  });
+class Plane with _$Plane {
+  factory Plane({
+    int? planeId,
+    required String planeName,
+    required String planeNumber,
+    required String planeType,
+    required int totalSeat,
+  }) = _Plane;
+  factory Plane.fromJson(Map<String, dynamic> json) => _$PlaneFromJson(json);
 }

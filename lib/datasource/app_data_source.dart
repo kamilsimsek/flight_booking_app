@@ -1,30 +1,36 @@
-/*import 'dart:convert';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:ucak/datasource/data_sources.dart';
+import 'package:ucak/datasource/temp_db.dart';
+import 'package:ucak/models/error_details_model.dart';
 import 'package:ucak/models/flight_reservation.dart';
 import 'package:ucak/models/flight_route_modal.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
 import 'package:ucak/models/plane_modal.dart';
-import 'package:ucak/models/response_model%20copy.dart';
+import 'package:ucak/models/response_model.dart';
 import 'package:ucak/utils/constants.dart';
+import 'package:ucak/utils/helper_functions.dart';
 
 class AppDataSource extends DataSource {
   final String baseUrl = 'http://10.0.2.2:8080/api/';
 
   Map<String, String> get header => {'Content-Type': 'application/json'};
-  Future<Map<String, String>> get authHeader async => {
+  /*Future<Map<String, String>> get authHeader async => {
         'Content-Type': 'application/json',
         HttpHeaders.authorizationHeader: 'Bearer ${await getToken()}',
       };
-
+*/
   @override
-  Future<ResponseModel> addBus(Plane plane) async {
-    final url = '$baseUrl${'bus/add'}';
+  Future<ResponseModel> addPlane(Plane plane) async {
+    final url = '$baseUrl${'plane/add'}';
     try {
-      final response = await http.post(Uri.parse(url),
-          headers: await authHeader, body: json.encode(plane.toJson()));
+      final response = await http.post(
+        Uri.parse(url),
+        //headers: await authHeader,
+        body: json.encode(plane.toJson),
+      );
       return await _getResponseModel(response);
     } catch (error) {
       print(error.toString());
@@ -48,15 +54,16 @@ class AppDataSource extends DataSource {
   Future<ResponseModel> addRoute(FlightRoute flightRoute) async {
     final url = '$baseUrl${'route/add'}';
     try {
-      final response = await http.post(Uri.parse(url),
-          headers: await authHeader, body: json.encode(flightRoute.toJson()));
+      final response = await http.post(
+        Uri.parse(url),
+        //headers: await authHeader,
+        body: json.encode(flightRoute.toJson()),
+      );
       return await _getResponseModel(response);
     } catch (error) {
       print(error.toString());
       rethrow;
     }
-
-    throw UnimplementedError();
   }
 
   @override
@@ -64,7 +71,7 @@ class AppDataSource extends DataSource {
     final url = '$baseUrl${'schedule/add'}';
     try {
       final response = await http.post(Uri.parse(url),
-          headers: await authHeader,
+          // headers: await authHeader,
           body: json.encode(flightSchedule.toJson()));
       return await _getResponseModel(response);
     } catch (error) {
@@ -74,8 +81,8 @@ class AppDataSource extends DataSource {
   }
 
   @override
-  Future<List<Plane>> getAllBus() async {
-    final url = '$baseUrl${'bus/all'}';
+  Future<List<Plane>> getAllPlane() async {
+    final url = '$baseUrl${'plane/all'}';
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -123,7 +130,6 @@ class AppDataSource extends DataSource {
 
   @override
   Future<List<FlightSchedule>> getAllSchedules() {
-    // TODO: implement getAllSchedules
     throw UnimplementedError();
   }
 
@@ -230,4 +236,3 @@ class AppDataSource extends DataSource {
     return responseModel;
   }
 }
-*/

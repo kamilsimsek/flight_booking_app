@@ -4,7 +4,7 @@ import 'package:ucak/models/flight_reservation.dart';
 import 'package:ucak/models/flight_route_modal.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
 import 'package:ucak/models/plane_modal.dart';
-import 'package:ucak/models/response_model%20copy.dart';
+import 'package:ucak/models/response_model.dart';
 
 abstract class DataSource {
   Future<ResponseModel> addPlane(Plane plane);

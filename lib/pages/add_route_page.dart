@@ -115,8 +115,10 @@ class _AddRoutePageState extends State<AddRoutePage> {
       Provider.of<AppDataProvider>(context, listen: false)
           .addRoute(route)
           .then((response) {
-        showMsg(context, "kayıt basarili");
-        resetFields();
+        if (response.responseStatus == ResponseStatus.SAVED) {
+          showMsg(context, response.message);
+          resetFields();
+        }
       });
     }
   }

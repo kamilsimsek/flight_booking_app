@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ucak/datasource/app_data_source.dart';
 import 'package:ucak/datasource/data_sources.dart';
 import 'package:ucak/datasource/dummy_data_sources.dart';
 import 'package:ucak/models/flight_reservation.dart';
@@ -6,7 +7,7 @@ import 'package:ucak/models/flight_route_modal.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
 import 'package:ucak/models/plane_modal.dart';
 import 'package:ucak/models/reservation_expansion_item.dart';
-import 'package:ucak/models/response_model%20copy.dart';
+import 'package:ucak/models/response_model.dart';
 
 class AppDataProvider extends ChangeNotifier {
   List<Plane> _planeList = [];
@@ -21,7 +22,7 @@ class AppDataProvider extends ChangeNotifier {
   List<FlightRoute> get routeList => _routeList;
 
   List<FlightReservation> get reservationList => _reservationList;
-  final DataSource _dataSource = DummyDataSources();
+  final DataSource _dataSource = AppDataSource();
 
   Future<ResponseModel> addPlane(Plane plane) {
     return _dataSource.addPlane(plane);
@@ -31,8 +32,8 @@ class AppDataProvider extends ChangeNotifier {
     return _dataSource.addRoute(route);
   }
 
-  Future<ResponseModel> addSchedule(FlightSchedule busSchedule) {
-    return _dataSource.addSchedule(busSchedule);
+  Future<ResponseModel> addSchedule(FlightSchedule flightSchedule) {
+    return _dataSource.addSchedule(flightSchedule);
   }
 
   Future<ResponseModel> addReservation(FlightReservation reservation) {

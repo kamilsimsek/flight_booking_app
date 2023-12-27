@@ -5,7 +5,7 @@ import 'package:ucak/models/flight_route_modal.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
 import 'package:ucak/models/plane_modal.dart';
 import 'package:flutter/material.dart';
-import 'package:ucak/models/response_model%20copy.dart';
+import 'package:ucak/models/response_model.dart';
 import 'package:ucak/utils/constants.dart';
 
 class DummyDataSources extends DataSource {

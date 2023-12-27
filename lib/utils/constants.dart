@@ -1,4 +1,12 @@
 const String bosField = "Bu alanın doldurulması zorunlu";
+const String reservationActive = 'Active';
+const String reservationExpired = 'Expired';
+const String accessToken = 'accessToken';
+const String loginTime = 'loginTime';
+const String expirationDuration = 'expirationDuration';
+const String busTypeNonAc = 'NON-AC';
+const String busTypeACEconomy = 'AC-ECONOMY';
+const String busTypeACBusiness = 'AC-BUSINESS';
 
 enum ResponseStatus {
   SAVED,
@@ -11,7 +19,7 @@ enum ResponseStatus {
 
 const cities = ["Istanbul", "Izmir", "konya", "Antalya"];
 
-const planeTypes = ["özelUcak", "kücükYolcu", "büyükYolcu"];
+const planeTypes = [busTypeACBusiness, busTypeACEconomy, busTypeNonAc];
 
 const seatLabelList = [
   'A',

@@ -1,4 +1,8 @@
+import 'package:provider/provider.dart';
+import 'package:ucak/models/customer.dart';
+import 'package:ucak/models/flight_reservation.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
+import 'package:ucak/providers/app_data_provider.dart';
 import 'package:ucak/utils/constants.dart';
 import 'package:ucak/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -210,6 +214,36 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
   }
 
   void _confirmBooking() {
-    if (_formKey.currentState!.validate()) {}
+    if (_formKey.currentState!.validate()) {
+      final customer = Customer(
+        customerName: nameController.text,
+        mobile: mobileController.text,
+        email: emailController.text,
+      );
+
+      final reservation = FlightReservation(
+        customer: customer,
+        flightSchedule: schedule,
+        timestamp: DateTime.now().millisecondsSinceEpoch,
+        departureDate: departureDate,
+        totalSeatBooked: totalSeatsBooked,
+        seatNumbers: seatNumbers,
+        reservationStatus: reservationActive,
+        totalPrice: getGrandTotal(schedule.discount, totalSeatsBooked,
+            schedule.ticketPrice, schedule.processingFee),
+      );
+      Provider.of<AppDataProvider>(context, listen: false)
+          .addReservation(reservation)
+          .then((response) {
+        if (response.responseStatus == ResponseStatus.SAVED) {
+          showMsg(context, response.message);
+          Navigator.popUntil(context, ModalRoute.withName("search"));
+        } else {
+          showMsg(context, response.message);
+        }
+      }).catchError((error) {
+        showMsg(context, "Kaydedilemedi");
+      });
+    }
   }
 }

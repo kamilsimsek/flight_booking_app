@@ -24,7 +24,7 @@ class _addPlanePageState extends State<addPlanePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Bus'),
+        title: const Text('Uçak Ekle'),
       ),
       body: Form(
         key: _formKey,
@@ -115,7 +115,7 @@ class _addPlanePageState extends State<addPlanePage> {
                 child: SizedBox(
                   width: 150,
                   child: ElevatedButton(
-                    onPressed: addBus,
+                    onPressed: addPlane,
                     child: const Text('ADD BUS'),
                   ),
                 ),
@@ -127,7 +127,7 @@ class _addPlanePageState extends State<addPlanePage> {
     );
   }
 
-  void addBus() {
+  void addPlane() {
     if (_formKey.currentState!.validate()) {
       final plane = Plane(
           planeId: TempDB.planeList.length + 1,
@@ -146,8 +146,10 @@ class _addPlanePageState extends State<addPlanePage> {
       Provider.of<AppDataProvider>(context, listen: false)
           .addPlane(plane)
           .then((response) {
-        showMsg(context, "kayıt basarili");
-        resetFields();
+        if (response.responseStatus == ResponseStatus.SAVED) {
+          showMsg(context, response.message);
+          resetFields();
+        }
       });
     }
   }

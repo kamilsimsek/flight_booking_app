@@ -184,20 +184,14 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
         discount: int.parse(discountController.text),
         processingFee: int.parse(feeController.text),
       );
-      /*final schedule = BusSchedule(
-        scheduleId: TempDB.tableSchedule.length + 1,
-        bus: bus!,
-        busRoute: busRoute!,
-        departureTime: getFormattedTime(timeOfDay!),
-        ticketPrice: int.parse(priceController.text),
-        discount: int.parse(discountController.text),
-        processingFee: int.parse(feeController.text),
-      );*/
+
       Provider.of<AppDataProvider>(context, listen: false)
           .addSchedule(schedule)
           .then((response) {
-        showMsg(context, "ananınn");
-        resetFields();
+        if (response.responseStatus == ResponseStatus.SAVED) {
+          showMsg(context, response.message);
+          resetFields();
+        }
       });
     }
   }
