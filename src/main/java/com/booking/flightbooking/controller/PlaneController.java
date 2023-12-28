@@ -25,4 +25,12 @@ public class PlaneController {
     public ResponseEntity<List<Plane>> getAllPlane(){
         return ResponseEntity.ok(planeService.getAllPlane());
     }
+
+    @DeleteMapping("/del/{id}")
+    public ResponseEntity<String> deletePlane(@PathVariable("id") Long id){
+        planeService.deletePlane(id);
+        return new ResponseEntity<>("Plane successfully deleted.",HttpStatus.OK);
+    }
 }
+
+

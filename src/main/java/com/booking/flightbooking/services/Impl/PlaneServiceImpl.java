@@ -26,7 +26,7 @@ public class PlaneServiceImpl implements PlaneService{
     @Override
     public void deletePlane(Long id) {
         Plane plane = planeRepository.findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("Bus not found with id : "+id));
+                orElseThrow(() -> new ResourceNotFoundException("Plane not found with id : "+id));
         planeRepository.deleteById(id);
     }
 }
