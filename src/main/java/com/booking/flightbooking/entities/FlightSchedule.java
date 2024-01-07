@@ -13,7 +13,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "plane_schedule")
 public class FlightSchedule {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId;

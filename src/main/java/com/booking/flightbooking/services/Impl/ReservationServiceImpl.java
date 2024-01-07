@@ -46,8 +46,10 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> getReservationsByScheduleAndDepartureDate(Long scheduleId, String departureDate) {
-        final FlightSchedule flightSchedule = flightScheduleRepository.findById(scheduleId).orElseThrow(() -> new ReservationApiException(HttpStatus.BAD_REQUEST, "Schedule not found"));
-        return reservationRepository.findByFlightScheduleAndDepartureDate(flightSchedule,departureDate)
+        final FlightSchedule flightSchedule = flightScheduleRepository.
+                findById(scheduleId).orElseThrow(() -> new ReservationApiException(HttpStatus.BAD_REQUEST, "Schedule not found"));
+        return reservationRepository.
+                findByFlightScheduleAndDepartureDate(flightSchedule,departureDate)
                 .orElseThrow(() -> new ReservationApiException(HttpStatus.BAD_REQUEST, "Reservation not found"));
     }
 
