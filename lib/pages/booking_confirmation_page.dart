@@ -263,8 +263,6 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
       Provider.of<AppDataProvider>(context, listen: false)
           .addReservation(reservation)
           .then((response) {
-        print("aaa");
-        print(reservation);
         if (response.responseStatus == ResponseStatus.SAVED) {
           showMsg(context, "Rezervasyon Kaydedildi");
           Navigator.popUntil(context, ModalRoute.withName("search"));

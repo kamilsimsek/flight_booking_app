@@ -54,7 +54,6 @@ class DummyDataSources extends DataSource {
   @override
   Future<ResponseModel> addReservation(FlightReservation reservation) async {
     TempDB.flightReservationList.add(reservation);
-    print(TempDB.flightReservationList.length);
     return ResponseModel(
         responseStatus: ResponseStatus.SAVED,
         statusCode: 200,

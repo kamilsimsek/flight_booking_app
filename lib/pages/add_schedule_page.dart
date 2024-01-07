@@ -77,7 +77,6 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
                   onChanged: (value) {
                     setState(() {
                       flightRoute = value;
-                      print('length:' + provider.routeList.length.toString());
                     });
                   },
                   isExpanded: true,
@@ -249,7 +248,5 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
       Provider.of<AppDataProvider>(context, listen: false).getAllPlane();
       Provider.of<AppDataProvider>(context, listen: false).getAllFlightRoutes();
     }
-
-    print('data çekti..................');
   }
 }
