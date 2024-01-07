@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ucak/datasource/app_data_source.dart';
 import 'package:ucak/datasource/data_sources.dart';
-import 'package:ucak/datasource/dummy_data_sources.dart';
 import 'package:ucak/models/flight_reservation.dart';
 import 'package:ucak/models/flight_route_modal.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
@@ -40,13 +39,13 @@ class AppDataProvider extends ChangeNotifier {
     return _dataSource.addReservation(reservation);
   }
 
-  void getAllPlane() async {
+  Future<void> getAllPlane() async {
     _planeList = await _dataSource.getAllPlane();
     notifyListeners();
   }
 
-  void getAllPlaneRoutes() async {
-    _routeList = await _dataSource.getAllRoutes();
+  Future<void> getAllFlightRoutes() async {
+    _routeList = await _dataSource.getAllFlightRoutes();
     notifyListeners();
   }
 

@@ -3,12 +3,9 @@ import 'package:ucak/models/flight_schedule_model.dart';
 import 'package:ucak/models/plane_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../datasource/temp_db.dart';
-
-import '../providers/app_data_provider.dart';
-import '../utils/constants.dart';
-import '../utils/helper_functions.dart';
+import 'package:ucak/providers/app_data_provider.dart';
+import 'package:ucak/utils/constants.dart';
+import 'package:ucak/utils/helper_functions.dart';
 
 class AddSchedulePage extends StatefulWidget {
   const AddSchedulePage({Key? key}) : super(key: key);
@@ -20,6 +17,7 @@ class AddSchedulePage extends StatefulWidget {
 class _AddSchedulePageState extends State<AddSchedulePage> {
   final _formKey = GlobalKey<FormState>();
   String? busType;
+  bool _dataFetched = false;
   FlightRoute? flightRoute;
   Plane? plane;
   TimeOfDay? timeOfDay;
@@ -30,14 +28,22 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
   @override
   void didChangeDependencies() {
     _getData();
+    _dataFetched = true;
     super.didChangeDependencies();
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final MediaQueryData mediaQueryData = MediaQuery.of(context);
+    final double deviceWidth = mediaQueryData.size.width;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Schedule'),
+        title: const Text('Güzergah Ekle'),
       ),
       body: Form(
         key: _formKey,
@@ -56,7 +62,7 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
                   },
                   isExpanded: true,
                   value: plane,
-                  hint: const Text('Select Bus'),
+                  hint: const Text('Uçak Seç'),
                   items: provider.planeList
                       .map((e) => DropdownMenuItem<Plane>(
                             value: e,
@@ -71,11 +77,12 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
                   onChanged: (value) {
                     setState(() {
                       flightRoute = value;
+                      print('length:' + provider.routeList.length.toString());
                     });
                   },
                   isExpanded: true,
                   value: flightRoute,
-                  hint: const Text('Select Route'),
+                  hint: const Text('Rota Seç'),
                   items: provider.routeList
                       .map((e) => DropdownMenuItem<FlightRoute>(
                             value: e,
@@ -90,9 +97,11 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
               TextFormField(
                 keyboardType: TextInputType.number,
                 controller: priceController,
-                decoration: const InputDecoration(
-                  hintText: 'Ticket Price',
+                decoration: InputDecoration(
+                  hintText: 'Bilet Fiyatı',
                   filled: true,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
                   prefixIcon: Icon(Icons.price_change),
                 ),
                 validator: (value) {
@@ -108,9 +117,11 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
               TextFormField(
                 keyboardType: TextInputType.number,
                 controller: discountController,
-                decoration: const InputDecoration(
-                  hintText: 'Discount(%)',
+                decoration: InputDecoration(
+                  hintText: 'İndirim (%)',
                   filled: true,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
                   prefixIcon: Icon(Icons.discount),
                 ),
                 validator: (value) {
@@ -126,9 +137,11 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
               TextFormField(
                 keyboardType: TextInputType.number,
                 controller: feeController,
-                decoration: const InputDecoration(
-                  hintText: 'Processing Fee',
+                decoration: InputDecoration(
+                  hintText: 'Vergi',
                   filled: true,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
                   prefixIcon: Icon(Icons.monetization_on_outlined),
                 ),
                 validator: (value) {
@@ -146,19 +159,29 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
                 children: [
                   TextButton(
                     onPressed: _selectTime,
-                    child: const Text('Select Departure Time'),
+                    child: const Text('Kalkış Saati Seçin'),
                   ),
                   Text(timeOfDay == null
-                      ? 'No time chosen'
+                      ? 'Saat Seçilmedi'
                       : getFormattedTime(timeOfDay!)),
                 ],
               ),
-              Center(
-                child: SizedBox(
-                  width: 150,
-                  child: ElevatedButton(
-                    onPressed: addSchedule,
-                    child: const Text('ADD Schedule'),
+              SizedBox(
+                width: deviceWidth,
+                height: 40,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                  ),
+                  onPressed: () {
+                    addSchedule();
+                  },
+                  child: Text(
+                    "Güzergah Ekle",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -171,28 +194,29 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
 
   void addSchedule() {
     if (timeOfDay == null) {
-      showMsg(context, 'Please select a departure date');
+      showMsg(context, 'Lütfen Kalkış Saati Seçin');
       return;
     }
     if (_formKey.currentState!.validate()) {
       final schedule = FlightSchedule(
-        scheduleId: TempDB.flightReservationList.length + 1,
+        //scheduleId: TempDB.tableSchedule.length + 1,
         plane: plane!,
         flightRoute: flightRoute!,
         departureTime: getFormattedTime(timeOfDay!),
-        ticketPrice: int.parse(priceController.text),
-        discount: int.parse(discountController.text),
-        processingFee: int.parse(feeController.text),
+        ticketPrice: 100,
+        discount: 0,
+        processingFee: 10,
       );
-
       Provider.of<AppDataProvider>(context, listen: false)
           .addSchedule(schedule)
-          .then((response) {
-        if (response.responseStatus == ResponseStatus.SAVED) {
-          showMsg(context, response.message);
-          resetFields();
-        }
-      });
+          .then(
+        (response) {
+          {
+            showMsg(context, "Güzergah Ekleme Başarılı");
+            //resetFields();
+          }
+        },
+      );
     }
   }
 
@@ -221,7 +245,11 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
   }
 
   void _getData() {
-    Provider.of<AppDataProvider>(context, listen: false).getAllPlane();
-    Provider.of<AppDataProvider>(context, listen: false).getAllPlaneRoutes();
+    if (!_dataFetched) {
+      Provider.of<AppDataProvider>(context, listen: false).getAllPlane();
+      Provider.of<AppDataProvider>(context, listen: false).getAllFlightRoutes();
+    }
+
+    print('data çekti..................');
   }
 }

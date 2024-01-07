@@ -24,10 +24,10 @@ mixin _$Plane {
   set planeId(int? value) => throw _privateConstructorUsedError;
   String get planeName => throw _privateConstructorUsedError;
   set planeName(String value) => throw _privateConstructorUsedError;
-  String get planeNumber => throw _privateConstructorUsedError;
-  set planeNumber(String value) => throw _privateConstructorUsedError;
   String get planeType => throw _privateConstructorUsedError;
   set planeType(String value) => throw _privateConstructorUsedError;
+  String get planeNumber => throw _privateConstructorUsedError;
+  set planeNumber(String value) => throw _privateConstructorUsedError;
   int get totalSeat => throw _privateConstructorUsedError;
   set totalSeat(int value) => throw _privateConstructorUsedError;
 
@@ -44,8 +44,8 @@ abstract class $PlaneCopyWith<$Res> {
   $Res call(
       {int? planeId,
       String planeName,
-      String planeNumber,
       String planeType,
+      String planeNumber,
       int totalSeat});
 }
 
@@ -64,8 +64,8 @@ class _$PlaneCopyWithImpl<$Res, $Val extends Plane>
   $Res call({
     Object? planeId = freezed,
     Object? planeName = null,
-    Object? planeNumber = null,
     Object? planeType = null,
+    Object? planeNumber = null,
     Object? totalSeat = null,
   }) {
     return _then(_value.copyWith(
@@ -77,13 +77,13 @@ class _$PlaneCopyWithImpl<$Res, $Val extends Plane>
           ? _value.planeName
           : planeName // ignore: cast_nullable_to_non_nullable
               as String,
-      planeNumber: null == planeNumber
-          ? _value.planeNumber
-          : planeNumber // ignore: cast_nullable_to_non_nullable
-              as String,
       planeType: null == planeType
           ? _value.planeType
           : planeType // ignore: cast_nullable_to_non_nullable
+              as String,
+      planeNumber: null == planeNumber
+          ? _value.planeNumber
+          : planeNumber // ignore: cast_nullable_to_non_nullable
               as String,
       totalSeat: null == totalSeat
           ? _value.totalSeat
@@ -103,8 +103,8 @@ abstract class _$$PlaneImplCopyWith<$Res> implements $PlaneCopyWith<$Res> {
   $Res call(
       {int? planeId,
       String planeName,
-      String planeNumber,
       String planeType,
+      String planeNumber,
       int totalSeat});
 }
 
@@ -121,8 +121,8 @@ class __$$PlaneImplCopyWithImpl<$Res>
   $Res call({
     Object? planeId = freezed,
     Object? planeName = null,
-    Object? planeNumber = null,
     Object? planeType = null,
+    Object? planeNumber = null,
     Object? totalSeat = null,
   }) {
     return _then(_$PlaneImpl(
@@ -134,13 +134,13 @@ class __$$PlaneImplCopyWithImpl<$Res>
           ? _value.planeName
           : planeName // ignore: cast_nullable_to_non_nullable
               as String,
-      planeNumber: null == planeNumber
-          ? _value.planeNumber
-          : planeNumber // ignore: cast_nullable_to_non_nullable
-              as String,
       planeType: null == planeType
           ? _value.planeType
           : planeType // ignore: cast_nullable_to_non_nullable
+              as String,
+      planeNumber: null == planeNumber
+          ? _value.planeNumber
+          : planeNumber // ignore: cast_nullable_to_non_nullable
               as String,
       totalSeat: null == totalSeat
           ? _value.totalSeat
@@ -156,8 +156,8 @@ class _$PlaneImpl implements _Plane {
   _$PlaneImpl(
       {this.planeId,
       required this.planeName,
-      required this.planeNumber,
       required this.planeType,
+      required this.planeNumber,
       required this.totalSeat});
 
   factory _$PlaneImpl.fromJson(Map<String, dynamic> json) =>
@@ -168,15 +168,15 @@ class _$PlaneImpl implements _Plane {
   @override
   String planeName;
   @override
-  String planeNumber;
-  @override
   String planeType;
+  @override
+  String planeNumber;
   @override
   int totalSeat;
 
   @override
   String toString() {
-    return 'Plane(planeId: $planeId, planeName: $planeName, planeNumber: $planeNumber, planeType: $planeType, totalSeat: $totalSeat)';
+    return 'Plane(planeId: $planeId, planeName: $planeName, planeType: $planeType, planeNumber: $planeNumber, totalSeat: $totalSeat)';
   }
 
   @JsonKey(ignore: true)
@@ -197,8 +197,8 @@ abstract class _Plane implements Plane {
   factory _Plane(
       {int? planeId,
       required String planeName,
-      required String planeNumber,
       required String planeType,
+      required String planeNumber,
       required int totalSeat}) = _$PlaneImpl;
 
   factory _Plane.fromJson(Map<String, dynamic> json) = _$PlaneImpl.fromJson;
@@ -210,11 +210,11 @@ abstract class _Plane implements Plane {
   String get planeName;
   set planeName(String value);
   @override
-  String get planeNumber;
-  set planeNumber(String value);
-  @override
   String get planeType;
   set planeType(String value);
+  @override
+  String get planeNumber;
+  set planeNumber(String value);
   @override
   int get totalSeat;
   set totalSeat(int value);

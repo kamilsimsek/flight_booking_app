@@ -1,10 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ucak/providers/app_data_provider.dart';
 import 'package:ucak/services/auth_service.dart';
 import 'package:ucak/utils/constants.dart';
 import 'package:ucak/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class registerPage extends StatefulWidget {
   const registerPage({super.key});
@@ -41,9 +38,9 @@ class _registerPageState extends State<registerPage> {
                   height: 30,
                 ),
                 SizedBox(
-                    height: 250,
-                    width: 250,
-                    child: Image(image: AssetImage("assets/logo/logoo.png"))),
+                    height: 200,
+                    width: 200,
+                    child: Image(image: AssetImage("assets/logo/logo.png"))),
                 Padding(
                   padding: EdgeInsets.only(left: 20, right: 20),
                   child: TextFormField(
@@ -87,12 +84,8 @@ class _registerPageState extends State<registerPage> {
                         color: Colors.black54,
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return bosField;
-                      }
-                      return null;
-                    },
+                    validator: (value) =>
+                        validateEmail(email: mailController.text),
                   ),
                 ),
                 SizedBox(
@@ -114,12 +107,8 @@ class _registerPageState extends State<registerPage> {
                         color: Colors.black54,
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return bosField;
-                      }
-                      return null;
-                    },
+                    validator: (value) =>
+                        validatePassword(password: sifreController.text),
                   ),
                 ),
                 SizedBox(
@@ -141,12 +130,8 @@ class _registerPageState extends State<registerPage> {
                         color: Colors.black54,
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return bosField;
-                      }
-                      return null;
-                    },
+                    validator: (value) =>
+                        validatePassword(password: sifreController.text),
                   ),
                 ),
                 SizedBox(
@@ -229,7 +214,7 @@ class _registerPageState extends State<registerPage> {
 
   Future<void> signUp() async {
     await AuthService().signUp(
-        displayName: adController.text,
+        name: adController.text,
         email: mailController.text,
         password: sifreController.text);
   }

@@ -8,17 +8,17 @@ class MainDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          Container(
-            height: 200,
-            color: Colors.grey,
-          ),
+          SizedBox(
+              height: 200,
+              width: 200,
+              child: Image(image: AssetImage("assets/logo/logo.png"))),
           ListTile(
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, "addPlane");
             },
-            leading: const Icon(Icons.bus_alert),
-            title: const Text('Add Bus'),
+            leading: const Icon(Icons.flight),
+            title: const Text('Uçak Ekle'),
           ),
           ListTile(
             onTap: () {
@@ -26,7 +26,7 @@ class MainDrawer extends StatelessWidget {
               Navigator.pushNamed(context, "addRoute");
             },
             leading: const Icon(Icons.route),
-            title: const Text('Add Route'),
+            title: const Text('Rota Ekle'),
           ),
           ListTile(
             onTap: () {
@@ -34,23 +34,15 @@ class MainDrawer extends StatelessWidget {
               Navigator.pushNamed(context, "addSchedule");
             },
             leading: const Icon(Icons.schedule),
-            title: const Text('Add Schedule'),
+            title: const Text('Güzergah Ekle'),
           ),
           ListTile(
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, "addPlane");
+              Navigator.pushNamed(context, "reservation");
             },
             leading: const Icon(Icons.book_online),
-            title: const Text('View Reservations'),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, "addPlane");
-            },
-            leading: const Icon(Icons.login_outlined),
-            title: const Text('Admin Login'),
+            title: const Text('Rezervasyon Görüntüle'),
           ),
         ],
       ),

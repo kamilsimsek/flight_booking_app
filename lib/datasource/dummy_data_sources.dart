@@ -4,23 +4,10 @@ import 'package:ucak/models/flight_reservation.dart';
 import 'package:ucak/models/flight_route_modal.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
 import 'package:ucak/models/plane_modal.dart';
-import 'package:flutter/material.dart';
 import 'package:ucak/models/response_model.dart';
 import 'package:ucak/utils/constants.dart';
 
 class DummyDataSources extends DataSource {
-  @override
-  Future<FlightRoute?> getFlightRoute(String cityFrom, String cityTo) async {
-    FlightRoute? route;
-    try {
-      route = TempDB.routeList.firstWhere((element) =>
-          element.cityFrom == cityFrom && element.cityTo == cityTo);
-      return route;
-    } on StateError catch (error) {
-      return null;
-    }
-  }
-
   @override
   Future<FlightRoute?> getRouteByCityFromAndCityTo(
       String cityFrom, String cityTo) async {
@@ -29,6 +16,7 @@ class DummyDataSources extends DataSource {
       route = TempDB.routeList.firstWhere((element) =>
           element.cityFrom == cityFrom && element.cityTo == cityTo);
       return route;
+    // ignore: unused_catch_clause
     } on StateError catch (error) {
       return null;
     }
@@ -53,7 +41,6 @@ class DummyDataSources extends DataSource {
 
   @override
   Future<FlightRoute?> getRouteByRouteName(String routeName) {
-    // TODO: implement getRouteByRouteName
     throw UnimplementedError();
   }
 
@@ -71,7 +58,7 @@ class DummyDataSources extends DataSource {
     return ResponseModel(
         responseStatus: ResponseStatus.SAVED,
         statusCode: 200,
-        message: 'Your reservation has been saved',
+        message: 'Rezervasyon Onaylandı',
         object: {});
   }
 
@@ -81,7 +68,7 @@ class DummyDataSources extends DataSource {
     return ResponseModel(
         responseStatus: ResponseStatus.SAVED,
         statusCode: 200,
-        message: 'Bus Saved',
+        message: 'Uçak Eklendi',
         object: {});
   }
 
@@ -91,7 +78,7 @@ class DummyDataSources extends DataSource {
     return ResponseModel(
         responseStatus: ResponseStatus.SAVED,
         statusCode: 200,
-        message: 'Route Saved',
+        message: 'Rota Kaydedildi',
         object: {});
   }
 
@@ -106,13 +93,12 @@ class DummyDataSources extends DataSource {
   }
 
   @override
-  Future<List<FlightRoute>> getAllRoutes() async {
+  Future<List<FlightRoute>> getAllFlightRoutes() async {
     return TempDB.routeList;
   }
 
   @override
   Future<List<FlightSchedule>> getAllSchedules() {
-    // TODO: implement getAllSchedules
     throw UnimplementedError();
   }
 
@@ -122,7 +108,7 @@ class DummyDataSources extends DataSource {
     return ResponseModel(
         responseStatus: ResponseStatus.SAVED,
         statusCode: 200,
-        message: 'Schedule Saved',
+        message: 'Güzergah Kaydedildi',
         object: {});
   }
 }

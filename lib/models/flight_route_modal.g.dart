@@ -12,7 +12,6 @@ _$FlightRouteImpl _$$FlightRouteImplFromJson(Map<String, dynamic> json) =>
       routeName: json['routeName'] as String,
       cityFrom: json['cityFrom'] as String,
       cityTo: json['cityTo'] as String,
-      distanceInKm: (json['distanceInKm'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$FlightRouteImplToJson(_$FlightRouteImpl instance) =>
@@ -21,5 +20,4 @@ Map<String, dynamic> _$$FlightRouteImplToJson(_$FlightRouteImpl instance) =>
       'routeName': instance.routeName,
       'cityFrom': instance.cityFrom,
       'cityTo': instance.cityTo,
-      'distanceInKm': instance.distanceInKm,
     };

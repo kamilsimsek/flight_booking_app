@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:ucak/models/flight_reservation.dart';
 import 'package:ucak/models/flight_route_modal.dart';
@@ -10,7 +9,7 @@ abstract class DataSource {
   Future<ResponseModel> addPlane(Plane plane);
   Future<List<Plane>> getAllPlane();
   Future<ResponseModel> addRoute(FlightRoute flightRoute);
-  Future<List<FlightRoute>> getAllRoutes();
+  Future<List<FlightRoute>> getAllFlightRoutes();
   Future<FlightRoute?> getRouteByRouteName(String routeName);
   Future<FlightRoute?> getRouteByCityFromAndCityTo(
       String cityFrom, String cityTo);

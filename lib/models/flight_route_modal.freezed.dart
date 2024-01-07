@@ -28,8 +28,6 @@ mixin _$FlightRoute {
   set cityFrom(String value) => throw _privateConstructorUsedError;
   String get cityTo => throw _privateConstructorUsedError;
   set cityTo(String value) => throw _privateConstructorUsedError;
-  double get distanceInKm => throw _privateConstructorUsedError;
-  set distanceInKm(double value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,12 +41,7 @@ abstract class $FlightRouteCopyWith<$Res> {
           FlightRoute value, $Res Function(FlightRoute) then) =
       _$FlightRouteCopyWithImpl<$Res, FlightRoute>;
   @useResult
-  $Res call(
-      {int? routeId,
-      String routeName,
-      String cityFrom,
-      String cityTo,
-      double distanceInKm});
+  $Res call({int? routeId, String routeName, String cityFrom, String cityTo});
 }
 
 /// @nodoc
@@ -68,7 +61,6 @@ class _$FlightRouteCopyWithImpl<$Res, $Val extends FlightRoute>
     Object? routeName = null,
     Object? cityFrom = null,
     Object? cityTo = null,
-    Object? distanceInKm = null,
   }) {
     return _then(_value.copyWith(
       routeId: freezed == routeId
@@ -87,10 +79,6 @@ class _$FlightRouteCopyWithImpl<$Res, $Val extends FlightRoute>
           ? _value.cityTo
           : cityTo // ignore: cast_nullable_to_non_nullable
               as String,
-      distanceInKm: null == distanceInKm
-          ? _value.distanceInKm
-          : distanceInKm // ignore: cast_nullable_to_non_nullable
-              as double,
     ) as $Val);
   }
 }
@@ -103,12 +91,7 @@ abstract class _$$FlightRouteImplCopyWith<$Res>
       __$$FlightRouteImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int? routeId,
-      String routeName,
-      String cityFrom,
-      String cityTo,
-      double distanceInKm});
+  $Res call({int? routeId, String routeName, String cityFrom, String cityTo});
 }
 
 /// @nodoc
@@ -126,7 +109,6 @@ class __$$FlightRouteImplCopyWithImpl<$Res>
     Object? routeName = null,
     Object? cityFrom = null,
     Object? cityTo = null,
-    Object? distanceInKm = null,
   }) {
     return _then(_$FlightRouteImpl(
       routeId: freezed == routeId
@@ -145,10 +127,6 @@ class __$$FlightRouteImplCopyWithImpl<$Res>
           ? _value.cityTo
           : cityTo // ignore: cast_nullable_to_non_nullable
               as String,
-      distanceInKm: null == distanceInKm
-          ? _value.distanceInKm
-          : distanceInKm // ignore: cast_nullable_to_non_nullable
-              as double,
     ));
   }
 }
@@ -160,8 +138,7 @@ class _$FlightRouteImpl implements _FlightRoute {
       {this.routeId,
       required this.routeName,
       required this.cityFrom,
-      required this.cityTo,
-      required this.distanceInKm});
+      required this.cityTo});
 
   factory _$FlightRouteImpl.fromJson(Map<String, dynamic> json) =>
       _$$FlightRouteImplFromJson(json);
@@ -174,12 +151,10 @@ class _$FlightRouteImpl implements _FlightRoute {
   String cityFrom;
   @override
   String cityTo;
-  @override
-  double distanceInKm;
 
   @override
   String toString() {
-    return 'FlightRoute(routeId: $routeId, routeName: $routeName, cityFrom: $cityFrom, cityTo: $cityTo, distanceInKm: $distanceInKm)';
+    return 'FlightRoute(routeId: $routeId, routeName: $routeName, cityFrom: $cityFrom, cityTo: $cityTo)';
   }
 
   @JsonKey(ignore: true)
@@ -201,8 +176,7 @@ abstract class _FlightRoute implements FlightRoute {
       {int? routeId,
       required String routeName,
       required String cityFrom,
-      required String cityTo,
-      required double distanceInKm}) = _$FlightRouteImpl;
+      required String cityTo}) = _$FlightRouteImpl;
 
   factory _FlightRoute.fromJson(Map<String, dynamic> json) =
       _$FlightRouteImpl.fromJson;
@@ -219,9 +193,6 @@ abstract class _FlightRoute implements FlightRoute {
   @override
   String get cityTo;
   set cityTo(String value);
-  @override
-  double get distanceInKm;
-  set distanceInKm(double value);
   @override
   @JsonKey(ignore: true)
   _$$FlightRouteImplCopyWith<_$FlightRouteImpl> get copyWith =>

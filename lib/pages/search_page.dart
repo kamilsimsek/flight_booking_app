@@ -1,13 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ucak/drawers/main_drawer.dart';
 import 'package:ucak/providers/app_data_provider.dart';
-import 'package:ucak/services/auth_service.dart';
+import 'package:ucak/utils/constants.dart';
 import 'package:ucak/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-import '../utils/constants.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -21,6 +18,7 @@ class _SearchPageState extends State<SearchPage> {
   DateTime? departureDate;
   final _formKey = GlobalKey<FormState>();
 
+  // ignore: unused_field
   late User? _user;
 
   @override
@@ -41,13 +39,10 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
-    final double deviceHeight = mediaQueryData.size.height;
     final double deviceWidth = mediaQueryData.size.width;
     return Scaffold(
-      drawer: const MainDrawer(),
-      appBar: AppBar(
-        title: const Text('Admin'),
-      ),
+      drawer: check() ? MainDrawer() : null,
+      appBar: check() ? AppBar(title: const Text('Admin')) : null,
       body: Form(
         key: _formKey,
         child: Center(
@@ -55,6 +50,13 @@ class _SearchPageState extends State<SearchPage> {
             shrinkWrap: true,
             padding: const EdgeInsets.only(left: 30, right: 30),
             children: [
+              SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Image(image: AssetImage("assets/logo/logo.png"))),
+              SizedBox(
+                height: 80,
+              ),
               DropdownButtonFormField<String>(
                 //value: fromCity,
                 validator: (value) {
@@ -108,7 +110,6 @@ class _SearchPageState extends State<SearchPage> {
                   toCity = value;
                 },
               ),
-              Text("data " + _user!.email!),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -147,6 +148,9 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 120,
+              ),
             ],
           ),
         ),
@@ -168,6 +172,13 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
+  bool check() {
+    if (_user!.email == "caglar@gmail.com") {
+      return true;
+    }
+    return false;
+  }
+
   void _search() {
     if (departureDate == null) {
       showMsg(context, "Lütfen Tarih Seçiniz");
@@ -177,8 +188,12 @@ class _SearchPageState extends State<SearchPage> {
       Provider.of<AppDataProvider>(context, listen: false)
           .getRouteByCityFromAndCityTo(fromCity!, toCity!)
           .then((route) {
-        Navigator.pushNamed(context, "seferler",
-            arguments: [route, getFormattedDate(departureDate!)]);
+        if (route != null) {
+          Navigator.pushNamed(context, "seferler",
+              arguments: [route, getFormattedDate(departureDate!)]);
+        } else {
+          showMsg(context, "Rota bulunamadı. Lütfen önce rota seçin");
+        }
       });
     }
   }

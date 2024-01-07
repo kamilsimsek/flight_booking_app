@@ -1,6 +1,7 @@
 import 'package:ucak/customwidgets/seat_plan_view.dart';
 import 'package:ucak/models/flight_schedule_model.dart';
 import 'package:ucak/providers/app_data_provider.dart';
+import 'package:ucak/utils/constants.dart';
 import 'package:ucak/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -124,7 +125,7 @@ class _SeatPlanPageState extends State<SeatPlanPage> {
                     totalSeatBooked: totalSeatBooked,
                     bookedSeatNumbers: bookedSeatNumbers,
                     totalSeat: schedule.plane.totalSeat,
-                    isBusinessClass: schedule.plane.planeType == "özelUcak",
+                    isBusinessClass: schedule.plane.planeType == Private,
                   ),
                 ),
               ),

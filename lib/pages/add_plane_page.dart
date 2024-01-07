@@ -1,11 +1,10 @@
-import 'package:ucak/datasource/temp_db.dart';
+import 'package:ucak/models/flight_route_modal.dart';
 import 'package:ucak/models/plane_modal.dart';
 import 'package:ucak/providers/app_data_provider.dart';
+import 'package:ucak/utils/constants.dart';
 import 'package:ucak/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../utils/constants.dart';
 
 class addPlanePage extends StatefulWidget {
   const addPlanePage({Key? key}) : super(key: key);
@@ -20,8 +19,19 @@ class _addPlanePageState extends State<addPlanePage> {
   final seatController = TextEditingController();
   final nameController = TextEditingController();
   final numberController = TextEditingController();
+  Plane? plane;
+  FlightRoute? flightRoute;
+
+  @override
+  void didChangeDependencies() {
+    _getData();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final MediaQueryData mediaQueryData = MediaQuery.of(context);
+    final double deviceWidth = mediaQueryData.size.width;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Uçak Ekle'),
@@ -39,9 +49,10 @@ class _addPlanePageState extends State<addPlanePage> {
                     planeType = value;
                   });
                 },
+                // ignore: body_might_complete_normally_nullable
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please select a Plane Type';
+                    return 'Lütfen Uçak Türünü Seçiniz';
                   }
                 },
                 decoration: InputDecoration(
@@ -57,14 +68,17 @@ class _addPlanePageState extends State<addPlanePage> {
                     .toList(),
               ),
               const SizedBox(
-                height: 5,
+                height: 10,
               ),
               TextFormField(
                 controller: nameController,
-                decoration: const InputDecoration(
-                  hintText: 'Bus Name',
+                decoration: InputDecoration(
+                  hintText: 'Uçak İsmi',
                   filled: true,
-                  prefixIcon: Icon(Icons.bus_alert),
+                  fillColor: Colors.grey.shade200,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: Icon(Icons.flight),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -74,14 +88,17 @@ class _addPlanePageState extends State<addPlanePage> {
                 },
               ),
               const SizedBox(
-                height: 5,
+                height: 10,
               ),
               TextFormField(
                 controller: numberController,
-                decoration: const InputDecoration(
-                  hintText: 'Bus Number',
+                decoration: InputDecoration(
+                  hintText: 'Uçak No',
                   filled: true,
-                  prefixIcon: Icon(Icons.bus_alert),
+                  fillColor: Colors.grey.shade200,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: Icon(Icons.flight),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -91,14 +108,17 @@ class _addPlanePageState extends State<addPlanePage> {
                 },
               ),
               const SizedBox(
-                height: 5,
+                height: 10,
               ),
               TextFormField(
                 keyboardType: TextInputType.number,
                 controller: seatController,
-                decoration: const InputDecoration(
-                  hintText: 'Total Seats',
+                decoration: InputDecoration(
+                  hintText: 'Toplam Koltuk Sayısı',
                   filled: true,
+                  fillColor: Colors.grey.shade200,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
                   prefixIcon: Icon(Icons.event_seat),
                 ),
                 validator: (value) {
@@ -109,14 +129,24 @@ class _addPlanePageState extends State<addPlanePage> {
                 },
               ),
               const SizedBox(
-                height: 5,
+                height: 30,
               ),
-              Center(
-                child: SizedBox(
-                  width: 150,
-                  child: ElevatedButton(
-                    onPressed: addPlane,
-                    child: const Text('ADD BUS'),
+              SizedBox(
+                width: deviceWidth,
+                height: 40,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                  ),
+                  onPressed: () {
+                    addPlane();
+                  },
+                  child: Text(
+                    "Uçak Kaydet",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -130,27 +160,19 @@ class _addPlanePageState extends State<addPlanePage> {
   void addPlane() {
     if (_formKey.currentState!.validate()) {
       final plane = Plane(
-          planeId: TempDB.planeList.length + 1,
+          //planeId: TempDB.planeList.length + 1,
           planeName: nameController.text,
           planeNumber: numberController.text,
           planeType: planeType!,
           totalSeat: int.parse(seatController.text));
-      /*final bus = Bus(
-        busId: TempDB.tableBus.length +
-            1, // remove this line if you save into MySql DB
-        busName: nameController.text,
-        busNumber: numberController.text,
-        busType: busType!,
-        totalSeat: int.parse(seatController.text),
-      );*/
-      Provider.of<AppDataProvider>(context, listen: false)
-          .addPlane(plane)
-          .then((response) {
-        if (response.responseStatus == ResponseStatus.SAVED) {
-          showMsg(context, response.message);
-          resetFields();
-        }
-      });
+      Provider.of<AppDataProvider>(context, listen: false).addPlane(plane).then(
+        (response) {
+          {
+            showMsg(context, "Uçak Ekleme Başarılı");
+            resetFields();
+          }
+        },
+      );
     }
   }
 
@@ -166,5 +188,10 @@ class _addPlanePageState extends State<addPlanePage> {
     nameController.dispose();
     numberController.dispose();
     super.dispose();
+  }
+
+  void _getData() {
+    Provider.of<AppDataProvider>(context, listen: false).getAllPlane();
+    Provider.of<AppDataProvider>(context, listen: false).getAllFlightRoutes();
   }
 }

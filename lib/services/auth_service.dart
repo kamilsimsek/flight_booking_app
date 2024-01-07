@@ -5,25 +5,33 @@ import 'package:fluttertoast/fluttertoast.dart';
 class AuthService {
   final userCollection = FirebaseFirestore.instance.collection("users");
   FirebaseAuth _auth = FirebaseAuth.instance;
+  User? user;
 
-  Future<void> signIn({
+  Future<User?> signIn({
     required String email,
     required String password,
   }) async {
     try {
-      final UserCredential userCredential = await _auth
-          .signInWithEmailAndPassword(email: email, password: password);
-      if (userCredential.user != null) {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      /*if (userCredential.user != null) {
         Fluttertoast.showToast(
             msg: "Giriş Başarılı", toastLength: Toast.LENGTH_LONG);
-      }
+      }*/
+      user = userCredential.user;
     } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(msg: e.message!);
+      if (e.code == "user-not-found") {
+        print('No user found for that email.');
+      } else if (e == 'wrong-password') {
+        print('Wrong password provided.');
+      } else
+        print(e.code);
     }
+    return user;
   }
 
   Future<void> signUp(
-      {required String displayName,
+      {required String name,
       required email,
       required String password,
       bool? admin}) async {
@@ -34,8 +42,7 @@ class AuthService {
         password: password,
       );
       if (userCredential.user != null) {
-        _registerUser(
-            displayName: displayName, email: email, password: password);
+        _registerUser(name: name, email: email, password: password);
       }
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!);
@@ -43,16 +50,17 @@ class AuthService {
   }
 
   Future<void> _registerUser({
-    required String displayName,
+    required String name,
     required email,
     required String password,
+    // ignore: unused_element
     bool isAnonymous = false,
   }) async {
     await userCollection.doc().set({
-      "name": displayName,
+      "name": name,
       "email": email,
       "password": password,
-      "isAnonymous": isAnonymous,
+      "admin": false,
     });
   }
 

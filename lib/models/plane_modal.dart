@@ -7,8 +7,8 @@ class Plane with _$Plane {
   factory Plane({
     int? planeId,
     required String planeName,
-    required String planeNumber,
     required String planeType,
+    required String planeNumber,
     required int totalSeat,
   }) = _Plane;
   factory Plane.fromJson(Map<String, dynamic> json) => _$PlaneFromJson(json);

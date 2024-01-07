@@ -1,6 +1,5 @@
 import 'package:ucak/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 class SeatPlanView extends StatelessWidget {
   final int totalSeat;
@@ -21,6 +20,7 @@ class SeatPlanView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final noOfRows =
+        // ignore: division_optimization
         (isBusinessClass ? (totalSeat / 2).toInt() : (totalSeat / 4)).toInt();
     final noOfColumns = isBusinessClass ? 2 : 4;
     List<List<String>> seatArrangement = [];

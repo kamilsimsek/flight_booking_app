@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ucak/services/auth_service.dart';
-import 'package:ucak/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ucak/utils/helper_functions.dart';
 
@@ -35,9 +34,9 @@ class _loginPageState extends State<loginPage> {
                   height: 80,
                 ),
                 SizedBox(
-                    height: 250,
-                    width: 250,
-                    child: Image(image: AssetImage("assets/logo/logoo.png"))),
+                    height: 200,
+                    width: 200,
+                    child: Image(image: AssetImage("assets/logo/logo.png"))),
                 SizedBox(
                   height: 45,
                 ),
@@ -57,12 +56,8 @@ class _loginPageState extends State<loginPage> {
                         color: Colors.black54,
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return bosField;
-                      }
-                      return null;
-                    },
+                    validator: (value) =>
+                        validateEmail(email: mailController.text),
                   ),
                 ),
                 SizedBox(
@@ -84,12 +79,8 @@ class _loginPageState extends State<loginPage> {
                         color: Colors.black54,
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return bosField;
-                      }
-                      return null;
-                    },
+                    validator: (value) =>
+                        validatePassword(password: sifreController.text),
                   ),
                 ),
                 SizedBox(
@@ -144,22 +135,7 @@ class _loginPageState extends State<loginPage> {
 
   void _confirmGirisYap() {
     if (_formKey.currentState!.validate()) {
-      _sifreKontrol()
-          ? {
-              signIn(),
-              Navigator.pushNamed(context, "search"),
-              resetFields(),
-            }
-          : "Giriş başarısız";
-    }
-  }
-
-  bool _sifreKontrol() {
-    if (sifreController.text == sifreController.text) {
-      return true;
-    } else {
-      showMsg(context, "Sifreler eslesmiyor");
-      return false;
+      signIn();
     }
   }
 
@@ -168,8 +144,12 @@ class _loginPageState extends State<loginPage> {
     sifreController.clear();
   }
 
-  Future<void> signIn() async {
-    await AuthService()
+  void signIn() async {
+    User? user = await AuthService()
         .signIn(email: mailController.text, password: sifreController.text);
+    if (user != null) {
+      Navigator.pushNamed(context, "search");
+    } else
+      showMsg(context, "Mail veya Sifre Hatali");
   }
 }

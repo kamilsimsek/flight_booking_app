@@ -16,6 +16,37 @@ int getGrandTotal(int discount, int totalSeatBooked, int price, int fee) {
   return (priceAfterDiscount + fee).toInt();
 }
 
+String? validateEmail({required String email}) {
+  // ignore: unnecessary_null_comparison
+  if (email == null) {
+    return null;
+  }
+  RegExp emailRegExp = RegExp(
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+
+  if (email.isEmpty) {
+    return 'Email boş olamaz';
+  } else if (!emailRegExp.hasMatch(email)) {
+    return 'Lütfen doğru formatta e mail girin';
+  }
+
+  return null;
+}
+
+String? validatePassword({required String password}) {
+  // ignore: unnecessary_null_comparison
+  if (password == null) {
+    return null;
+  }
+  if (password.isEmpty) {
+    return 'Şifre boş olamaz';
+  } else if (password.length < 6) {
+    return 'Şifre en az 6 haneli olmalıdır';
+  }
+
+  return null;
+}
+
 String getFormattedTime(TimeOfDay tm, {String pattern = 'HH:mm'}) {
   return DateFormat(pattern).format(DateTime(0, 0, 0, tm.hour, tm.minute));
 }
